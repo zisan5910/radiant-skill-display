@@ -1,15 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { motion } from 'framer-motion';
+import { Link } from 'react-scroll';
 import { cn } from '../lib/utils';
+import { Menu, X } from 'lucide-react';
+import { NavigationItem } from './NavigationItems';
 
 interface NavigationProps {
-  navigationItems: Array<{
-    id: string;
-    icon: JSX.Element;
-    target?: string;
-  }>;
+  navigationItems: NavigationItem[];
   activeSection: string;
   scrollToSection: (section: string) => void;
   language: 'en' | 'bn';
@@ -23,163 +20,120 @@ const Navigation = ({
   language,
   setLanguage,
 }: NavigationProps) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const { ref, inView } = useInView({
-    threshold: 0,
-    initialInView: true,
-  });
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMobileMenuOpen(false);
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
-    <motion.nav
-      ref={ref}
-      initial={{ y: -100 }}
-      animate={{
-        y: 0,
-        backgroundColor: isScrolled
-          ? 'rgba(255, 255, 255, 0.9)'
-          : 'rgba(255, 255, 255, 1)',
-      }}
-      className={cn(
-        'fixed w-full z-50 transition-all duration-300',
-        isScrolled ? 'backdrop-blur-md shadow-lg' : 'shadow-md'
-      )}
-    >
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          {/* Mobile Menu Button */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={toggleMenu}
-            className="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500"
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={isMenuOpen ? 'close' : 'menu'}
-                initial={{ opacity: 0, rotate: -90 }}
-                animate={{ opacity: 1, rotate: 0 }}
-                exit={{ opacity: 0, rotate: 90 }}
-                transition={{ duration: 0.2 }}
-              >
-                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </motion.div>
-            </AnimatePresence>
-          </motion.button>
+    <nav className="bg-white py-4 shadow-md sticky top-0 z-50">
+      <div className="container mx-auto px-4 flex items-center justify-between">
+        <button
+          onClick={() => scrollToSection('profile')}
+          className="text-2xl font-bold text-slate-800 hover:text-indigo-600 transition-colors"
+        >
+          Ridoan
+        </button>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-4">
-            {navigationItems.map((item) => (
-              <motion.button
-                key={item.id}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToSection(item.target || item.id)}
-                className={cn(
-                  'flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-300',
-                  activeSection === (item.target || item.id)
-                    ? 'bg-green-100 text-green-700 shadow-sm'
-                    : 'text-gray-600 hover:bg-gray-100'
-                )}
-              >
-                <motion.div
-                  animate={{
-                    rotate:
-                      activeSection === (item.target || item.id) ? 360 : 0,
-                  }}
-                  transition={{ duration: 0.5 }}
-                >
-                  {item.icon}
-                </motion.div>
-                <span className="text-sm font-medium">
-                  {item.id.charAt(0).toUpperCase() + item.id.slice(1)}
-                </span>
-              </motion.button>
-            ))}
-          </div>
-
-          {/* Language Toggle Button */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setLanguage(language === 'en' ? 'bn' : 'en')}
-            className={cn(
-              'px-4 py-2 rounded-md text-sm font-medium transition-all duration-300',
-              'bg-gradient-to-r from-green-600 to-green-700 text-white',
-              'hover:from-green-500 hover:to-green-600',
-              'focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
-            )}
-          >
-            {language === 'en' ? 'বাংলা' : 'English'}
-          </motion.button>
+        {/* Mobile Menu Button */}
+        <div className="md:hidden">
+          <button onClick={toggleMobileMenu} className="text-slate-600 hover:text-slate-800">
+            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
         </div>
 
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
-              className="md:hidden overflow-hidden bg-white"
-            >
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="px-2 pt-2 pb-3 space-y-1"
-              >
-                {navigationItems.map((item, index) => (
-                  <motion.button
-                    key={item.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => {
-                      scrollToSection(item.target || item.id);
-                      setIsMenuOpen(false);
-                    }}
-                    className={cn(
-                      'w-full flex items-center gap-2 px-4 py-3 rounded-md transition-all duration-300',
-                      activeSection === (item.target || item.id)
-                        ? 'bg-green-100 text-green-700 shadow-sm'
-                        : 'text-gray-600 hover:bg-gray-100'
-                    )}
-                  >
-                    <motion.div
-                      animate={{
-                        rotate:
-                          activeSection === (item.target || item.id) ? 360 : 0,
-                      }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      {item.icon}
-                    </motion.div>
-                    <span className="font-medium">
-                      {item.id.charAt(0).toUpperCase() + item.id.slice(1)}
-                    </span>
-                  </motion.button>
-                ))}
-              </motion.div>
-            </motion.div>
+        {/* Language Switcher */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setLanguage('en')}
+            className={cn(
+              'px-3 py-1 rounded-md text-sm font-medium transition-colors',
+              language === 'en' ? 'bg-indigo-500 text-white' : 'text-slate-600 hover:bg-slate-100'
+            )}
+          >
+            English
+          </button>
+          <button
+            onClick={() => setLanguage('bn')}
+            className={cn(
+              'px-3 py-1 rounded-md text-sm font-medium transition-colors',
+              language === 'bn' ? 'bg-indigo-500 text-white' : 'text-slate-600 hover:bg-slate-100'
+            )}
+          >
+            বাংলা
+          </button>
+        </div>
+
+        {/* Desktop Navigation */}
+        <div
+          className={cn(
+            'hidden md:flex items-center gap-6',
+            isMobileMenuOpen ? 'flex flex-col absolute top-full left-0 w-full bg-white shadow-md rounded-b-md py-4' : ''
           )}
-        </AnimatePresence>
+        >
+          {navigationItems.map((item) => (
+            <Link
+              key={item.id}
+              to={item.id}
+              smooth={true}
+              duration={500}
+              offset={-64}
+              className={cn(
+                'text-slate-600 hover:text-indigo-600 transition-colors flex items-center gap-2',
+                activeSection === item.id ? 'text-indigo-700 font-medium' : ''
+              )}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {item.icon}
+              {item.title}
+            </Link>
+          ))}
+        </div>
       </div>
-    </motion.nav>
+
+      {/* Mobile Navigation */}
+      {isMobileMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2 }}
+          className="md:hidden absolute top-full left-0 w-full bg-white shadow-md rounded-b-md py-4"
+        >
+          <div className="flex flex-col items-center gap-4">
+            {navigationItems.map((item) => (
+              <Link
+                key={item.id}
+                to={item.id}
+                smooth={true}
+                duration={500}
+                offset={-64}
+                className={cn(
+                  'text-slate-600 hover:text-indigo-600 transition-colors flex items-center gap-2',
+                  activeSection === item.id ? 'text-indigo-700 font-medium' : ''
+                )}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {item.icon}
+                {item.title}
+              </Link>
+            ))}
+          </div>
+        </motion.div>
+      )}
+    </nav>
   );
 };
 
