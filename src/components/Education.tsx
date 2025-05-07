@@ -1,3 +1,4 @@
+
 import { motion } from 'framer-motion';
 import { Element } from 'react-scroll';
 import { GraduationCap, School, ExternalLink, BookOpen } from 'lucide-react';
@@ -31,9 +32,7 @@ const Education = ({ language }: EducationProps) => {
         bn: ['গ্রুপ: বিজ্ঞান', 'মেজর: উচ্চতর গণিত'],
       },
       link: 'https://g.co/kgs/WZW688y',
-      icon: (
-        <GraduationCap size={20} className="text-blue-500" aria-hidden="true" />
-      ),
+      icon: <GraduationCap size={20} className="text-blue-500" />,
     },
     {
       id: 'ssc',
@@ -58,7 +57,7 @@ const Education = ({ language }: EducationProps) => {
         bn: ['গ্রুপ: বিজ্ঞান', 'মেজর: উচ্চতর গণিত'],
       },
       link: 'https://g.co/kgs/W57Ts2o',
-      icon: <School size={20} className="text-green-500" aria-hidden="true" />,
+      icon: <School size={20} className="text-green-500" />,
     },
   ];
 
@@ -75,7 +74,7 @@ const Education = ({ language }: EducationProps) => {
           id="education-heading"
           className="text-2xl font-bold mb-8 flex items-center gap-2 text-green-700"
         >
-          <BookOpen className="text-emerald-500" aria-hidden="true" />
+          <BookOpen className="text-emerald-500" />
           {language === 'en' ? 'Education' : 'শিক্ষা'}
         </h2>
 

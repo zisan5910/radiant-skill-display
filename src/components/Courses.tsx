@@ -1,3 +1,4 @@
+
 import { motion } from 'framer-motion';
 import { Element } from 'react-scroll';
 import {
@@ -31,13 +32,7 @@ const Courses = ({ language }: CoursesProps) => {
       },
       platform: 'Simplilearn | Skillup',
       duration: language === 'en' ? '2 weeks' : '২ সপ্তাহ',
-      icon: (
-        <BrainCircuit
-          size={20}
-          className="text-purple-500"
-          aria-hidden="true"
-        />
-      ),
+      icon: <BrainCircuit size={20} className="text-purple-500" />,
     },
     {
       id: 'web-dev-course',
@@ -51,7 +46,7 @@ const Courses = ({ language }: CoursesProps) => {
       },
       platform: 'Programming Hero',
       duration: language === 'en' ? '1 week' : '১ সপ্তাহ',
-      icon: <Code size={20} className="text-orange-500" aria-hidden="true" />,
+      icon: <Code size={20} className="text-orange-500" />,
     },
     {
       id: 'digital-marketing-course',
@@ -65,9 +60,7 @@ const Courses = ({ language }: CoursesProps) => {
       },
       platform: 'HubSpot Academy',
       duration: language === 'en' ? '1 week' : '১ সপ্তাহ',
-      icon: (
-        <LineChart size={20} className="text-green-500" aria-hidden="true" />
-      ),
+      icon: <LineChart size={20} className="text-green-500" />,
     },
     {
       id: 'corporate-skills-course',
@@ -81,7 +74,7 @@ const Courses = ({ language }: CoursesProps) => {
       },
       platform: '10 Minute School',
       duration: language === 'en' ? '3 weeks' : '৩ সপ্তাহ',
-      icon: <Users size={20} className="text-amber-500" aria-hidden="true" />,
+      icon: <Users size={20} className="text-amber-500" />,
     },
   ];
 
@@ -100,7 +93,7 @@ const Courses = ({ language }: CoursesProps) => {
         en: 'Semi-Final',
         bn: 'সেমি-ফাইনাল',
       },
-      icon: <Target size={20} className="text-red-500" aria-hidden="true" />,
+      icon: <Target size={20} className="text-red-500" />,
     },
     {
       id: 'ai-olympiad',
@@ -116,7 +109,7 @@ const Courses = ({ language }: CoursesProps) => {
         en: 'Semi-Final',
         bn: 'সেমি-ফাইনাল',
       },
-      icon: <Binary size={20} className="text-indigo-500" aria-hidden="true" />,
+      icon: <Binary size={20} className="text-indigo-500" />,
     },
     {
       id: 'ict-olympiad',
@@ -132,9 +125,7 @@ const Courses = ({ language }: CoursesProps) => {
         en: 'Semi-Final',
         bn: 'সেমি-ফাইনাল',
       },
-      icon: (
-        <Network size={20} className="text-emerald-500" aria-hidden="true" />
-      ),
+      icon: <Network size={20} className="text-emerald-500" />,
     },
     {
       id: 'math-olympiad',
@@ -150,11 +141,57 @@ const Courses = ({ language }: CoursesProps) => {
         en: 'Selective Round',
         bn: 'নির্বাচনী রাউন্ড',
       },
-      icon: (
-        <Calculator size={20} className="text-cyan-500" aria-hidden="true" />
-      ),
+      icon: <Calculator size={20} className="text-cyan-500" />,
     },
   ];
+
+  const renderCourseItem = (course: any) => (
+    <motion.div
+      key={course.id}
+      initial={{ x: -20, opacity: 0 }}
+      whileInView={{ x: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ type: 'spring', stiffness: 100 }}
+      className="border-l-4 border-emerald-500 pl-4 py-4 hover:bg-emerald-50 rounded-r-lg transition-colors duration-200 group"
+    >
+      <div className="flex items-start gap-4">
+        <div className="p-2 bg-emerald-100 rounded-full group-hover:bg-emerald-200 transition-colors flex-shrink-0">
+          {course.icon}
+        </div>
+        <div>
+          <h4 className="font-semibold text-gray-800">{course.title[language]}</h4>
+          <p className="text-gray-600 mt-2">{course.description[language]}</p>
+          <p className="text-sm mt-3 text-gray-500">
+            <span className="font-medium">{course.platform}</span>
+            <span className="mx-2">•</span>
+            <span>{course.duration}</span>
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+
+  const renderOlympiadItem = (olympiad: any) => (
+    <motion.div
+      key={olympiad.id}
+      initial={{ x: -20, opacity: 0 }}
+      whileInView={{ x: 0, opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ type: 'spring', stiffness: 100 }}
+      className="border-l-4 border-amber-500 pl-4 py-4 hover:bg-amber-50 rounded-r-lg transition-colors duration-200 group"
+    >
+      <div className="flex items-start gap-4">
+        <div className="p-2 bg-amber-100 rounded-full group-hover:bg-amber-200 transition-colors flex-shrink-0">
+          {olympiad.icon}
+        </div>
+        <div>
+          <h4 className="font-semibold text-gray-800">{olympiad.title[language]}</h4>
+          <p className="text-gray-600 mt-2">{olympiad.description[language]}</p>
+          <p className="text-sm mt-3 font-medium text-amber-700">{olympiad.level[language]}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
 
   return (
     <Element name="courses">
@@ -169,81 +206,27 @@ const Courses = ({ language }: CoursesProps) => {
           id="courses-heading"
           className="text-2xl font-bold mb-8 flex items-center gap-2 text-green-700"
         >
-          <BookOpen className="text-emerald-500" aria-hidden="true" />
+          <BookOpen className="text-emerald-500" />
           {language === 'en' ? 'Professional Development' : 'পেশাদার উন্নয়ন'}
         </h2>
 
         <div className="mb-12">
           <h3 className="text-xl font-semibold mb-6 text-gray-800 flex items-center gap-2">
-            <Trophy className="text-amber-500" aria-hidden="true" />
+            <Trophy className="text-amber-500" />
             {language === 'en' ? 'Academic Olympiads' : 'একাডেমিক অলিম্পিয়াড'}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {olympiads.map((olympiad) => (
-              <motion.div
-                key={olympiad.id}
-                initial={{ x: -20, opacity: 0 }}
-                whileInView={{ x: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ type: 'spring', stiffness: 100 }}
-                className="border-l-4 border-amber-500 pl-4 py-4 hover:bg-amber-50 rounded-r-lg transition-colors duration-200 group"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="p-2 bg-amber-100 rounded-full group-hover:bg-amber-200 transition-colors flex-shrink-0">
-                    {olympiad.icon}
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800">
-                      {olympiad.title[language]}
-                    </h4>
-                    <p className="text-gray-600 mt-2">
-                      {olympiad.description[language]}
-                    </p>
-                    <p className="text-sm mt-3 font-medium text-amber-700">
-                      {olympiad.level[language]}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+            {olympiads.map(renderOlympiadItem)}
           </div>
         </div>
 
         <div>
           <h3 className="text-xl font-semibold mb-6 text-gray-800 flex items-center gap-2">
-            <BookOpen className="text-emerald-500" aria-hidden="true" />
+            <BookOpen className="text-emerald-500" />
             {language === 'en' ? 'Professional Courses' : 'পেশাদার কোর্স'}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {professionalCourses.map((course) => (
-              <motion.div
-                key={course.id}
-                initial={{ x: -20, opacity: 0 }}
-                whileInView={{ x: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ type: 'spring', stiffness: 100 }}
-                className="border-l-4 border-emerald-500 pl-4 py-4 hover:bg-emerald-50 rounded-r-lg transition-colors duration-200 group"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="p-2 bg-emerald-100 rounded-full group-hover:bg-emerald-200 transition-colors flex-shrink-0">
-                    {course.icon}
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800">
-                      {course.title[language]}
-                    </h4>
-                    <p className="text-gray-600 mt-2">
-                      {course.description[language]}
-                    </p>
-                    <p className="text-sm mt-3 text-gray-500">
-                      <span className="font-medium">{course.platform}</span>
-                      <span className="mx-2">•</span>
-                      <span>{course.duration}</span>
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+            {professionalCourses.map(renderCourseItem)}
           </div>
         </div>
       </motion.section>

@@ -1,12 +1,7 @@
+
 import { motion } from 'framer-motion';
 import { Element } from 'react-scroll';
-import {
-  Briefcase,
-  Target,
-  HeartHandshake,
-  ExternalLink,
-  Facebook,
-} from 'lucide-react';
+import { Briefcase, Target, HeartHandshake, ExternalLink, Facebook } from 'lucide-react';
 
 interface ExperienceProps {
   language: 'en' | 'bn';
@@ -83,7 +78,7 @@ const Experience = ({ language }: ExperienceProps) => {
           },
           description: {
             en: 'React + Firebase blood management system with real-time donor database',
-            bn: 'রিয়েল-টাইম ডোনার ডাটাবেস সহ React ও Firebase দিয়ে তৈরি রক্ত ব্যবস্থাপনা সিস্টেম',
+            bn: 'রিয়েল-টাইম ডোনার ডাটাবেস সহ React ও Firebase দিয়ে তৈরি রক্ত ব্যবস্থাপনা সিস্টেম',
           },
           url: 'https://bobdo.netlify.app',
         },
@@ -117,6 +112,22 @@ const Experience = ({ language }: ExperienceProps) => {
     },
   ];
 
+  const renderProjectItem = (project: any, iconColor: string) => (
+    <div className="flex flex-wrap items-center gap-2">
+      <Target size={18} className={`flex-shrink-0 ${iconColor}`} />
+      <h4 className="font-medium">{project.name[language]}</h4>
+      <a
+        href={project.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-600 hover:text-blue-800 flex items-center gap-1 text-sm"
+      >
+        <ExternalLink size={16} />
+        {language === 'en' ? 'View' : 'দেখুন'}
+      </a>
+    </div>
+  );
+
   return (
     <Element name="experience">
       <motion.section
@@ -130,7 +141,7 @@ const Experience = ({ language }: ExperienceProps) => {
           id="experience-heading"
           className="text-2xl font-bold mb-8 flex items-center gap-2 text-green-700"
         >
-          <Briefcase className="text-emerald-500" aria-hidden="true" />
+          <Briefcase className="text-emerald-500" />
           {language === 'en' ? 'Experience' : 'অভিজ্ঞতা'}
         </h2>
 
@@ -153,11 +164,7 @@ const Experience = ({ language }: ExperienceProps) => {
                     '200'
                   )} transition-colors flex-shrink-0`}
                 >
-                  <Briefcase
-                    size={20}
-                    className={experience.iconColor}
-                    aria-hidden="true"
-                  />
+                  <Briefcase size={20} className={experience.iconColor} />
                 </div>
                 <div className="flex-1">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2">
@@ -182,17 +189,13 @@ const Experience = ({ language }: ExperienceProps) => {
                     )}
                   </div>
 
-                  <p className="text-gray-600 mt-1">
-                    {experience.role[language]}
-                  </p>
+                  <p className="text-gray-600 mt-1">{experience.role[language]}</p>
 
                   {experience.achievements && (
                     <ul className="mt-3 space-y-2 text-gray-700">
                       {experience.achievements.map((achievement, index) => (
                         <li key={index} className="flex items-start gap-2">
-                          <span className="mt-1 flex-shrink-0">
-                            {achievement.icon}
-                          </span>
+                          <span className="mt-1 flex-shrink-0">{achievement.icon}</span>
                           <span>{achievement.description[language]}</span>
                         </li>
                       ))}
@@ -203,24 +206,7 @@ const Experience = ({ language }: ExperienceProps) => {
                     <div className="mt-3 space-y-4">
                       {experience.projects.map((project, index) => (
                         <div key={index}>
-                          <div className="flex flex-wrap items-center gap-2">
-                            <Target
-                              size={18}
-                              className={`flex-shrink-0 ${experience.iconColor}`}
-                            />
-                            <h4 className="font-medium">
-                              {project.name[language]}
-                            </h4>
-                            <a
-                              href={project.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-blue-600 hover:text-blue-800 flex items-center gap-1 text-sm"
-                            >
-                              <ExternalLink size={16} />
-                              {language === 'en' ? 'View' : 'দেখুন'}
-                            </a>
-                          </div>
+                          {renderProjectItem(project, experience.iconColor)}
                           <p className="text-gray-700 ml-7 mt-1">
                             {project.description[language]}
                           </p>

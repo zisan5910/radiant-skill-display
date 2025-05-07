@@ -1,3 +1,4 @@
+
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Expand, Minimize, Loader2 } from 'lucide-react';
@@ -15,10 +16,7 @@ interface CertificateSliderProps {
   language: 'en' | 'bn';
 }
 
-const CertificateSlider = ({
-  certificates,
-  language,
-}: CertificateSliderProps) => {
+const CertificateSlider = ({ certificates, language }: CertificateSliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -60,7 +58,7 @@ const CertificateSlider = ({
     });
 
     return () => {
-      certificates.forEach((cert) => {
+      certificates.forEach(() => {
         const img = new Image();
         img.onload = null;
         img.onerror = null;
@@ -173,7 +171,6 @@ const CertificateSlider = ({
           <button 
             onClick={() => window.location.reload()}
             className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
-            aria-label="Retry loading certificates"
           >
             Retry
           </button>

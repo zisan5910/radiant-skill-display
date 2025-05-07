@@ -1,14 +1,7 @@
+
 import { motion } from 'framer-motion';
 import { Element } from 'react-scroll';
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Linkedin,
-  ExternalLink,
-  Send,
-  CheckCircle,
-} from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, ExternalLink, Send, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
 
 interface ContactProps {
@@ -93,51 +86,33 @@ const Contact = ({ language }: ContactProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const { name, subject, message } = formData;
-
-    // Format the email body according to the requested template
+    
     const emailBody = `Dear,\n\n${message}\n\nBest regards,\n${name}\n`;
-
-    // Detect if user is on mobile device
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     if (isMobile) {
-      // For mobile devices, use standard mailto link
       const mailtoLink = `mailto:ridoan.zisan@gmail.com?subject=${encodeURIComponent(
         subject
       )}&body=${encodeURIComponent(emailBody)}`;
       window.location.href = mailtoLink;
     } else {
-      // For desktop, open Gmail compose window
       const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=ridoan.zisan@gmail.com&su=${encodeURIComponent(
         subject
       )}&body=${encodeURIComponent(emailBody)}`;
       window.open(gmailLink, '_blank');
     }
 
-    // Show success message
     setIsSubmitted(true);
+    setFormData({ name: '', subject: '', message: '' });
 
-    // Reset form after submission (keeping the default subject)
-    setFormData({
-      name: '',
-      subject: '',
-      message: '',
-    });
-
-    // Hide success message after 5 seconds
     setTimeout(() => {
       setIsSubmitted(false);
     }, 5000);
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -153,11 +128,10 @@ const Contact = ({ language }: ContactProps) => {
           id="contact-heading"
           className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-2 text-green-700"
         >
-          <Mail className="text-emerald-500" aria-hidden="true" />
+          <Mail className="text-emerald-500" />
           {contactData.title[language]}
         </h2>
 
-        {/* Success Message */}
         {isSubmitted && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -186,7 +160,7 @@ const Contact = ({ language }: ContactProps) => {
                   whileHover={{ x: 10 }}
                   className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4 last:mb-0"
                 >
-                  <span aria-hidden="true">{item.icon}</span>
+                  <span>{item.icon}</span>
                   {item.isExternal ? (
                     <a
                       href={item.link}

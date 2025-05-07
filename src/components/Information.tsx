@@ -1,13 +1,14 @@
+
 import { motion } from 'framer-motion';
 import { Element } from 'react-scroll';
 import { Heart, ExternalLink } from 'lucide-react';
 
-interface FamilyProps {
+interface InformationProps {
   language: 'en' | 'bn';
   age: number;
 }
 
-const Family = ({ language, age }: FamilyProps) => {
+const Information = ({ language, age }: InformationProps) => {
   const familyData = {
     familyInfo: {
       title: {
@@ -158,4 +159,4 @@ const Family = ({ language, age }: FamilyProps) => {
   );
 };
 
-export default Family;
+export default Information;
