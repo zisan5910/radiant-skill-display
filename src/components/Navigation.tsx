@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-scroll';
@@ -54,6 +55,27 @@ const Navigation = ({
           </button>
         </div>
 
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center gap-6">
+          {navigationItems.map((item) => (
+            <Link
+              key={item.id}
+              to={item.id}
+              smooth={true}
+              duration={500}
+              offset={-64}
+              className={cn(
+                'text-slate-600 hover:text-indigo-600 transition-colors flex items-center gap-2',
+                activeSection === item.id ? 'text-indigo-700 font-medium' : ''
+              )}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {item.icon}
+              {item.title}
+            </Link>
+          ))}
+        </div>
+
         {/* Language Switcher */}
         <div className="flex items-center gap-2">
           <button
@@ -74,32 +96,6 @@ const Navigation = ({
           >
             বাংলা
           </button>
-        </div>
-
-        {/* Desktop Navigation */}
-        <div
-          className={cn(
-            'hidden md:flex items-center gap-6',
-            isMobileMenuOpen ? 'flex flex-col absolute top-full left-0 w-full bg-white shadow-md rounded-b-md py-4' : ''
-          )}
-        >
-          {navigationItems.map((item) => (
-            <Link
-              key={item.id}
-              to={item.id}
-              smooth={true}
-              duration={500}
-              offset={-64}
-              className={cn(
-                'text-slate-600 hover:text-indigo-600 transition-colors flex items-center gap-2',
-                activeSection === item.id ? 'text-indigo-700 font-medium' : ''
-              )}
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {item.icon}
-              {item.title}
-            </Link>
-          ))}
         </div>
       </div>
 
