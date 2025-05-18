@@ -52,9 +52,9 @@ const Navbar = () => {
             <img 
               src="https://i.postimg.cc/MTHfXmpG/20250518-133009.png" 
               alt="KathGolap Logo" 
-              className="h-8 w-auto rounded-full border-2 border-primary/20 shadow-sm"
+              className="h-6 sm:h-8 w-auto rounded-full border-2 border-primary/20 shadow-sm"
             />
-            <h1 className="text-2xl font-bold text-primary">KathGolap</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-primary">KathGolap</h1>
           </Link>
         </div>
 
@@ -135,13 +135,13 @@ const Navbar = () => {
             </Link>
             <div className="flex flex-col space-y-2">
               <span className="text-sm font-medium">Categories</span>
-              <Link to="/category/fashion" className="text-sm pl-4 hover:text-primary transition-colors">
+              <Link to="/category/fashion" className="text-xs sm:text-sm pl-4 hover:text-primary transition-colors">
                 Fashion
               </Link>
-              <Link to="/category/electronics" className="text-sm pl-4 hover:text-primary transition-colors">
+              <Link to="/category/electronics" className="text-xs sm:text-sm pl-4 hover:text-primary transition-colors">
                 Electronics
               </Link>
-              <Link to="/category/others" className="text-sm pl-4 hover:text-primary transition-colors">
+              <Link to="/category/others" className="text-xs sm:text-sm pl-4 hover:text-primary transition-colors">
                 Others
               </Link>
             </div>
@@ -158,13 +158,13 @@ const Navbar = () => {
             <Input
               type="search"
               placeholder="Search products..."
-              className="w-full rounded-full pl-9"
+              className="w-full rounded-full pl-9 text-sm"
               autoFocus
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <Search className="absolute left-2.5 h-4 w-4 text-muted-foreground" />
-            <Button type="submit" variant="ghost" size="sm" className="absolute right-2">
+            <Button type="submit" variant="ghost" size="sm" className="absolute right-2 text-xs">
               Search
             </Button>
           </form>
