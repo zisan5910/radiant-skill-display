@@ -16,7 +16,6 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({
   title = "Discover Premium Products at KathGolap",
   subtitle = "Shop the latest trends in fashion, electronics, and more with exclusive deals and offers.",
-  imageUrl = "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&q=80&w=1280",
   primaryButtonText = "Shop Now",
   primaryButtonLink = "/category/fashion",
   secondaryButtonText = "View Deals",
