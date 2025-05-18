@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
@@ -11,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 
 const CheckoutPage: React.FC = () => {
-  const { cart, clearCart } = useCart();
+  const { cartItems, clearCart, getCartTotal, totalItems } = useCart();
   const { toast } = useToast();
   const navigate = useNavigate();
   
@@ -71,7 +70,7 @@ const CheckoutPage: React.FC = () => {
     }, 1500);
   };
   
-  if (cart.items.length === 0) {
+  if (cartItems.length === 0) {
     navigate("/cart");
     return null;
   }
@@ -200,7 +199,7 @@ const CheckoutPage: React.FC = () => {
             <h2 className="text-lg font-bold mb-4">Order Summary</h2>
             
             <div className="space-y-4 mb-4">
-              {cart.items.map((item) => (
+              {cartItems.map((item) => (
                 <div key={item.id} className="flex gap-3">
                   <div className="w-16 h-16 shrink-0">
                     <img
@@ -222,8 +221,8 @@ const CheckoutPage: React.FC = () => {
             
             <div className="space-y-3 mb-4 text-sm">
               <div className="flex justify-between">
-                <span>Subtotal ({cart.totalItems} items)</span>
-                <span>{formatPrice(cart.totalPrice)}</span>
+                <span>Subtotal ({totalItems} items)</span>
+                <span>{formatPrice(getCartTotal())}</span>
               </div>
               <div className="flex justify-between">
                 <span>Shipping</span>
@@ -231,7 +230,7 @@ const CheckoutPage: React.FC = () => {
               </div>
               <div className="flex justify-between">
                 <span>Tax</span>
-                <span>{formatPrice(cart.totalPrice * 0.05)}</span>
+                <span>{formatPrice(getCartTotal() * 0.05)}</span>
               </div>
             </div>
             
@@ -239,7 +238,7 @@ const CheckoutPage: React.FC = () => {
             
             <div className="flex justify-between font-bold">
               <span>Total</span>
-              <span>{formatPrice(cart.totalPrice + (cart.totalPrice * 0.05))}</span>
+              <span>{formatPrice(getCartTotal() + (getCartTotal() * 0.05))}</span>
             </div>
           </div>
         </div>

@@ -1,4 +1,3 @@
-
 import React, { useState, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCart, Search } from "lucide-react";
@@ -20,7 +19,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const { cart } = useCart();
+  const { totalItems } = useCart();
 
   const handleSearchSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -112,9 +111,9 @@ const Navbar = () => {
             <Button variant="ghost" size="icon" aria-label="Cart" className="relative">
               <ShoppingCart className="h-5 w-5" />
               <span className="sr-only">Cart</span>
-              {cart.totalItems > 0 && (
+              {totalItems > 0 && (
                 <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-medium text-white">
-                  {cart.totalItems}
+                  {totalItems}
                 </span>
               )}
             </Button>

@@ -25,6 +25,7 @@ interface CartContextType {
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
   getCartTotal: () => number;
+  totalItems: number; // Added this property to expose the total number of items
 }
 
 const initialState: CartState = {
@@ -137,6 +138,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, 0);
   };
 
+  // Calculate the total number of items in the cart
+  const totalItems = cart.items.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <CartContext.Provider
       value={{ 
@@ -145,7 +149,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         removeFromCart, 
         updateQuantity, 
         clearCart,
-        getCartTotal 
+        getCartTotal,
+        totalItems // Added this property to expose the total number of items
       }}
     >
       {children}
