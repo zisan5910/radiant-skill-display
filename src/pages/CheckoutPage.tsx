@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
@@ -200,18 +201,18 @@ const CheckoutPage: React.FC = () => {
             
             <div className="space-y-4 mb-4">
               {cartItems.map((item) => (
-                <div key={item.id} className="flex gap-3">
+                <div key={item.product.id} className="flex gap-3">
                   <div className="w-16 h-16 shrink-0">
                     <img
-                      src={item.image}
-                      alt={item.name}
+                      src={item.product.image}
+                      alt={item.product.name}
                       className="w-full h-full object-cover rounded-md"
                     />
                   </div>
                   <div className="flex-grow min-w-0">
-                    <p className="font-medium line-clamp-1">{item.name}</p>
+                    <p className="font-medium line-clamp-1">{item.product.name}</p>
                     <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
-                    <p className="text-sm">{formatPrice(item.price * item.quantity)}</p>
+                    <p className="text-sm">{formatPrice(item.product.price * item.quantity)}</p>
                   </div>
                 </div>
               ))}

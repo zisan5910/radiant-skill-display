@@ -1,3 +1,4 @@
+
 import React, { useState, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCart, Search } from "lucide-react";
@@ -48,6 +49,11 @@ const Navbar = () => {
             </Button>
           )}
           <Link to="/" className="flex items-center gap-2">
+            <img 
+              src="https://i.postimg.cc/MTHfXmpG/20250518-133009.png" 
+              alt="KathGolap Logo" 
+              className="h-8 w-auto rounded-full border-2 border-primary/20 shadow-sm"
+            />
             <h1 className="text-2xl font-bold text-primary">KathGolap</h1>
           </Link>
         </div>
