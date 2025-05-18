@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/context/CartContext";
 
 export interface ProductProps {
   id: string;
@@ -18,6 +18,8 @@ export interface ProductProps {
   isNew?: boolean;
   isFeatured?: boolean;
   isDiscount?: boolean;
+  discountPrice?: number;
+  discount?: boolean;
 }
 
 interface ProductCardProps {
@@ -25,7 +27,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const { toast } = useToast();
+  const { addToCart } = useCart();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("bn-BD", {
@@ -38,10 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    toast({
-      title: "Product added to cart",
-      description: `${product.name} has been added to your cart.`,
-    });
+    addToCart(product);
   };
 
   const discountPercentage = product.originalPrice
